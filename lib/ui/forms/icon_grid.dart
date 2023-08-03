@@ -6,19 +6,19 @@ import 'package:sink/theme/palette.dart' as Palette;
 
 class IconGrid extends StatefulWidget {
   final Color selectedColor;
-  final String selectedCategory;
+  final String? selectedCategory;
   final Function(String) onTap;
   final LinkedHashMap<String, IconData> assignableIcons;
 
   IconGrid({
-    @required this.selectedColor,
-    @required this.onTap,
+    required this.selectedColor,
+    required this.onTap,
     this.selectedCategory,
   }) : this.assignableIcons = LinkedHashMap.from(icons)
           ..removeWhere((key, value) => key == 'add');
 
   @override
-  State<StatefulWidget> createState() => IconGridState(onTap, selectedCategory);
+  State<StatefulWidget> createState() => IconGridState(onTap, selectedCategory!);
 }
 
 class IconGridState extends State<IconGrid> {

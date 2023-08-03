@@ -17,13 +17,15 @@ class EditExpensePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EditExpensePageArgs args = ModalRoute.of(context).settings.arguments;
+    final EditExpensePageArgs? args =
+        ModalRoute.of(context)?.settings.arguments as EditExpensePageArgs?;
     return StoreConnector<AppState, _EditViewModel>(
       converter: _EditViewModel.fromState,
       builder: (context, vm) {
         return EntryForm(
           onSave: vm.onSave,
-          entry: args.entry,
+          entry: args?.entry ??
+              Entry(amount: 0.0, date: DateTime.now(), categoryId: '', type: EntryType.EXPENSE),
         );
       },
     );
@@ -33,7 +35,7 @@ class EditExpensePage extends StatelessWidget {
 class _EditViewModel {
   final Function(Entry) onSave;
 
-  _EditViewModel({@required this.onSave});
+  _EditViewModel({required this.onSave});
 
   static _EditViewModel fromState(Store<AppState> store) {
     return _EditViewModel(

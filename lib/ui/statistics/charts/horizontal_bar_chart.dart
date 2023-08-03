@@ -10,9 +10,9 @@ class HorizontalBarChart extends StatelessWidget {
   final double totalAmount;
 
   HorizontalBarChart({
-    @required this.data,
-    @required this.maxAmount,
-    @required this.totalAmount,
+    required this.data,
+    required this.maxAmount,
+    required this.totalAmount,
   });
 
   @override
@@ -56,9 +56,9 @@ class _HorizontalBarLabel extends StatelessWidget {
   final double amount;
 
   _HorizontalBarLabel({
-    @required this.label,
-    @required this.percent,
-    @required this.amount,
+    required this.label,
+    required this.percent,
+    required this.amount,
   });
 
   @override

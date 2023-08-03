@@ -18,9 +18,9 @@ class CategoryGrid extends StatefulWidget {
   final CategoryType type;
 
   CategoryGrid({
-    @required this.onTap,
-    @required this.selected,
-    @required this.type,
+    required this.onTap,
+    required this.selected,
+    required this.type,
   });
 
   @override
@@ -63,7 +63,7 @@ class _CategoryGridState extends State<CategoryGrid> {
                   isSelected: widget.selected == category.id,
                 ))
             .toList();
-        cats.add(addCategoryTile);
+        cats.add(addCategoryTile as CategoryTile);
 
         return Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -83,7 +83,7 @@ class _CategoryGridState extends State<CategoryGrid> {
 class _ViewModel {
   final AppState state;
 
-  _ViewModel({@required this.state});
+  _ViewModel({required this.state});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(state: store.state);
@@ -103,10 +103,10 @@ class CategoryTile extends StatelessWidget {
   final bool isSelected;
 
   CategoryTile({
-    Key key,
-    @required this.handleTap,
-    @required this.category,
-    @required this.isSelected,
+    Key? key,
+    required this.handleTap,
+    required this.category,
+    required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -120,8 +120,8 @@ class CategoryTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CategoryIcon(
-              iconData: icons[category.icon],
-              color: isSelected ? category.color : Palette.lightGrey,
+              iconData: icons[category.icon]!,
+              color: isSelected ? category.color! : Palette.lightGrey,
               isActive: isSelected,
             ),
             Padding(

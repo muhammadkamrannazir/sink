@@ -7,11 +7,11 @@ class CategoryIcon extends StatelessWidget {
   CategoryIcon._internal(this.icon, this.color);
 
   factory CategoryIcon({
-    @required IconData iconData,
-    @required Color color,
-    bool isActive,
+    required IconData iconData,
+    required Color color,
+    bool isActive = false,
   }) {
-    var active = isActive ?? false;
+    var active = isActive ;
     var finalIcon = Icon(iconData, color: active ? Colors.white : Colors.black);
     var finalColor = active
         ? Color.fromRGBO(color.red, color.green, color.blue, .8)

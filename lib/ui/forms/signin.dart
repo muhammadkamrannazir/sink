@@ -16,8 +16,8 @@ class SignInForm extends StatefulWidget {
 class SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email;
-  String _password;
+  String? _email;
+  String? _password;
 
   void _onEmailSaved(String value) {
     _email = value.trim();
@@ -38,7 +38,7 @@ class SignInFormState extends State<SignInForm> {
             ? LoadingButton()
             : RoundedButton(
                 text: "Sign In",
-                onPressed: () => _save(() => vm.signIn(_email, _password)),
+                onPressed: () => _save(() => vm.signIn(_email!, _password!)),
               );
 
         var baseForm = <Widget>[
@@ -46,7 +46,7 @@ class SignInFormState extends State<SignInForm> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child:
-                  Text('Sign In', style: Theme.of(context).textTheme.headline),
+                  Text('Sign In', style: Theme.of(context).textTheme.headlineMedium),
             ),
           ),
           EmailFormField(
@@ -73,8 +73,8 @@ class SignInFormState extends State<SignInForm> {
   }
 
   void _save(Function signIn) {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       signIn();
     }
   }
@@ -86,9 +86,9 @@ class _SignInViewModel {
   final String errorMessage;
 
   _SignInViewModel({
-    @required this.signIn,
-    @required this.signInInProgress,
-    @required this.errorMessage,
+    required this.signIn,
+    required this.signInInProgress,
+    required this.errorMessage,
   });
 
   static _SignInViewModel fromState(Store<AppState> store) {

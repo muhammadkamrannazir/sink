@@ -18,7 +18,7 @@ class YearExpenses extends StatelessWidget {
   final DateTime from;
   final DateTime to;
 
-  YearExpenses({@required this.to})
+  YearExpenses({required this.to})
       : this.from = DateTime(to.year - 1, to.month + 1);
 
   @override
@@ -99,7 +99,7 @@ class _ViewModel {
   final Function(String) resolveColor;
   final FirestoreDatabase database;
 
-  _ViewModel({@required this.resolveColor, @required this.database});
+  _ViewModel({required this.resolveColor, required this.database});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(

@@ -8,28 +8,29 @@ class Category {
   final String id;
   final String name;
   final String icon;
-  final Color color;
-  final CategoryType type;
+  final Color? color;
+  final CategoryType? type;
 
   Category({
-    @required this.id,
-    @required this.name,
-    @required this.icon,
-    @required this.color,
-    @required this.type,
+    required this.id,
+    required this.name,
+    required this.icon,
+     this.color,
+     this.type,
   });
 
-  static fromSnapshot(DocumentSnapshot document) {
-    return Category(
-      id: document['id'],
-      name: document['name'],
-      icon: document['icon'],
-      color: Color(document['color']),
-      type: document['type'] != null
-          ? CategoryType.values[document['type']]
-          : CategoryType.values[0],
-    );
-  }
+static Category fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> document) {
+  return Category(
+    id: document['id'] as String,
+    name: document['name'] as String,
+    icon: document['icon'] as String,
+    color: Color(document['color'] as int),
+    type: document['type'] != null
+        ? CategoryType.values[document['type'] as int]
+        : CategoryType.values[0],
+  );
+}
+
 
   @override
   String toString() {

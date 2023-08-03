@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:redux/redux.dart';
@@ -25,12 +23,12 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
           .then((user) => attemptSignIn(store, user))
           .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
     } else if (action is SignOut) {
-      navigatorKey.currentState.pushReplacementNamed(InitialPage.route);
+      navigatorKey.currentState!.pushReplacementNamed(InitialPage.route);
       // HACK: I could not find a way to ensure that all streams to Firestore
-      // are closed before user is signed out. It seems that after replacing a
+      // are closed before the user is signed out. It seems that after replacing a
       // route, the old one is still active for some time and is still receiving
       // events from Firestore, which result in permission denied exceptions.
-      // Hence, we need to wait a little bit until old widget is disposed of.
+      // Hence, we need to wait a little bit until the old widget is disposed of.
       await Future.delayed(Duration(milliseconds: 1000))
           .then((_) => store.dispatch(SetUserDetails(id: "", email: "")))
           .then((_) => auth.signOut());
@@ -48,26 +46,26 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     next(action);
   }
 
-  void attemptUserRetrieval(Store<AppState> store, FirebaseUser user) {
-    if (user != null && user.isEmailVerified) {
+  void attemptUserRetrieval(Store<AppState> store, User? user) {
+    if (user != null && user.emailVerified) {
       final userId = user.uid.toString();
-      store.dispatch(SetUserDetails(id: userId, email: user.email));
+      store.dispatch(SetUserDetails(id: userId, email: user.email!));
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(RehydrateState());
-      navigatorKey.currentState.popAndPushNamed(HomeScreen.route);
+      navigatorKey.currentState!.popAndPushNamed(HomeScreen.route);
     } else {
       store.dispatch(SetUserDetails(id: "", email: ""));
-      navigatorKey.currentState.popAndPushNamed(InitialPage.route);
+      navigatorKey.currentState!.popAndPushNamed(InitialPage.route);
     }
   }
 
-  void attemptSignIn(Store<AppState> store, FirebaseUser user) {
-    if (user.isEmailVerified) {
-      store.dispatch(SetUserDetails(id: user.uid, email: user.email));
+  void attemptSignIn(Store<AppState> store, User? user) {
+    if (user?.emailVerified ?? false) {
+      store.dispatch(SetUserDetails(id: user!.uid, email: user.email!));
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(ReportSignInSuccess());
       store.dispatch(RehydrateState());
-      navigatorKey.currentState.popAndPushNamed(HomeScreen.route);
+      navigatorKey.currentState!.popAndPushNamed(HomeScreen.route);
     } else {
       store.dispatch(SignOut());
       store.dispatch(ReportAuthenticationError("Email is not verified."));

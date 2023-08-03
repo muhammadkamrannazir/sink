@@ -43,7 +43,7 @@ class _ViewModel {
   List<Category> income;
   List<Category> expenses;
 
-  _ViewModel({@required this.income, @required this.expenses});
+  _ViewModel({required this.income, required this.expenses});
 
   static _ViewModel fromState(Store<AppState> store) {
     List<Category> income = [], expenses = [];
@@ -61,8 +61,8 @@ class TypedCategoryList extends StatelessWidget {
   TypedCategoryList._(this.type, this.tiles);
 
   factory TypedCategoryList({
-    @required String type,
-    @required List<Category> categories,
+    required String type,
+    required List<Category> categories,
   }) {
     List<Widget> tiles = [TypedCategoryTitle(type)];
     tiles.addAll(categories.map<Widget>((c) => CategoryTile(c)).toList());
@@ -88,7 +88,7 @@ class TypedCategoryTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Text(this.type, style: Theme.of(context).textTheme.subhead),
+      child: Text(this.type, style: Theme.of(context).textTheme.subtitle1),
     );
   }
 }
@@ -102,7 +102,7 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CategoryIcon(
-        iconData: icons[category.icon],
+        iconData: icons[category.icon]!,
         color: category.color,
         isActive: true,
       ),

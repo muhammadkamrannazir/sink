@@ -5,7 +5,7 @@ class CenteredText extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
 
-  CenteredText({@required this.text, fontSize, fontWeight})
+  CenteredText({required this.text, fontSize, fontWeight})
       : this.fontSize = fontSize ?? 16.0,
         this.fontWeight = fontWeight ?? FontWeight.normal;
 
@@ -27,7 +27,7 @@ class FormTitleText extends StatelessWidget {
   final String text;
   final EdgeInsets padding;
 
-  FormTitleText({@required this.text, padding})
+  FormTitleText({required this.text, padding})
       : this.padding = padding ?? EdgeInsets.only(top: 8.0, bottom: 8.0);
 
   @override
@@ -36,7 +36,7 @@ class FormTitleText extends StatelessWidget {
       padding: padding,
       child: Text(
         text,
-        style: Theme.of(context).textTheme.body2,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

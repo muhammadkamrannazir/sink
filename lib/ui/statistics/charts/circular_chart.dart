@@ -12,8 +12,8 @@ class CircularChart extends StatelessWidget {
   CircularChart._(this.data, this.totalAmount);
 
   factory CircularChart({
-    @required List<ChartEntry> data,
-    @required double totalAmount,
+    required List<ChartEntry> data,
+    required double totalAmount,
   }) {
     var entries = data.map((bar) => toEntry(bar)).toList();
     var result = [CircularStackEntry(entries, rankKey: "Categories")];

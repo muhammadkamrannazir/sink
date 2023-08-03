@@ -91,9 +91,9 @@ class _ViewModel {
   final Category category;
 
   _ViewModel({
-    @required this.onDismissed,
-    @required this.onUndo,
-    @required this.category,
+    required this.onDismissed,
+    required this.onUndo,
+    required this.category,
   });
 
   static _ViewModel fromState(Store<AppState> store, String categoryId) {

@@ -67,10 +67,10 @@ class _MonthExpensesViewModel {
   final FirestoreDatabase database;
 
   _MonthExpensesViewModel({
-    @required this.toCategory,
-    @required this.start,
-    @required this.end,
-    @required this.database,
+    required this.toCategory,
+    required this.start,
+    required this.end,
+    required this.database,
   });
 
   static _MonthExpensesViewModel fromState(Store<AppState> store) {
@@ -124,7 +124,7 @@ class _EmptyMonthBreakdownViewModel {
   final String selectedMonth;
 
   _EmptyMonthBreakdownViewModel({
-    @required this.selectedMonth,
+    required this.selectedMonth,
   });
 
   static _EmptyMonthBreakdownViewModel fromState(Store<AppState> store) {
@@ -173,8 +173,8 @@ class _MonthSliderViewModel {
   final DoubleLinkedQueueEntry<DateTime> selectedMonth;
 
   _MonthSliderViewModel({
-    @required this.selectedMonth,
-    @required this.selectMonth,
+    required this.selectedMonth,
+    required this.selectMonth,
   });
 
   static _MonthSliderViewModel fromState(Store<AppState> store) {

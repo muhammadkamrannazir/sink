@@ -17,9 +17,9 @@ class VerticalBarChart extends StatelessWidget {
   final double maxHeight;
 
   VerticalBarChart({
-    @required this.data,
-    @required this.maxAmount,
-    @required this.maxHeight,
+    required this.data,
+    required this.maxAmount,
+    required this.maxHeight,
   });
 
   @override
@@ -72,10 +72,10 @@ class ClickableVerticalBar extends StatelessWidget {
   );
 
   factory ClickableVerticalBar({
-    @required DatedChartEntry entry,
-    @required double width,
-    @required double maxHeight,
-    @required double maxAmount,
+    required DatedChartEntry entry,
+    required double width,
+    required double maxHeight,
+    required double maxAmount,
   }) {
     final heightPercentage = entry.amount / maxAmount;
     final amount = entry.amount.toStringAsFixed(2);
@@ -119,7 +119,7 @@ class ClickableVerticalBar extends StatelessWidget {
                       amount,
                       style: Theme.of(context)
                           .textTheme
-                          .body1
+                          .bodyMedium!
                           .copyWith(fontSize: 12.0),
                     ),
                   ),
@@ -148,8 +148,8 @@ class _ClickableVerticalBarViewModel {
   final int month;
 
   _ClickableVerticalBarViewModel({
-    @required this.selectMonth,
-    @required this.month,
+    required this.selectMonth,
+    required this.month,
   });
 
   static _ClickableVerticalBarViewModel fromState(Store<AppState> store) {

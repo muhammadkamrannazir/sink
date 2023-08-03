@@ -13,7 +13,7 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var emailStyle =
-        Theme.of(context).textTheme.body2.copyWith(color: Colors.white);
+        Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white);
 
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
@@ -29,14 +29,14 @@ class HomeDrawer extends StatelessWidget {
                   child: DrawerHeader(
                     child: Center(child: Text(vm.email, style: emailStyle)),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                 ),
                 ListTile(
                   title: Text(
                     'Categories',
-                    style: Theme.of(context).textTheme.body2,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   onTap: () =>
                       Navigator.popAndPushNamed(context, CategoryList.route),
@@ -44,7 +44,7 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   title: Text(
                     'Sign out',
-                    style: Theme.of(context).textTheme.body2.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Palette.discouraged,
                         ),
                   ),
@@ -80,8 +80,8 @@ class _ViewModel {
   final String email;
 
   _ViewModel({
-    @required this.signOut,
-    @required this.email,
+    required this.signOut,
+    required this.email,
   });
 
   static _ViewModel fromState(Store<AppState> store) {

@@ -9,9 +9,9 @@ class AnimatedBar extends StatefulWidget {
   final Duration duration;
 
   AnimatedBar({
-    @required this.width,
-    @required this.height,
-    @required this.color,
+    required this.width,
+    required this.height,
+    required this.color,
     horizontal,
     borderRadius,
     duration,
@@ -25,7 +25,7 @@ class AnimatedBar extends StatefulWidget {
 
 class _AnimatedBarState extends State<AnimatedBar>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+ late  AnimationController _controller;
 
   @override
   void initState() {

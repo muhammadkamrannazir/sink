@@ -13,8 +13,8 @@ class YearBreakdown extends StatelessWidget {
   YearBreakdown._(this.label, this.data, this.maxAmount, this.totalAmount);
 
   factory YearBreakdown({
-    @required String label,
-    @required List<DatedChartEntry> data,
+    required String label,
+    required List<DatedChartEntry> data,
   }) {
     var amounts = data.map((ce) => ce.amount);
     var maxAmount = max(amounts);

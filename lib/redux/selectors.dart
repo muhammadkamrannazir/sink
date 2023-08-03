@@ -27,9 +27,7 @@ Set<Category> getIncomeCategories(AppState state) => state.categories
     .toSet();
 
 Category getCategory(AppState state, String id) =>
-    state.categories.firstWhere((category) {
-      return category.id == id;
-    }, orElse: () {
+    state.categories.firstWhere((category) => category.id == id, orElse: () {
       throw CategoryNotFound("Could not find a category with id[$id]");
     });
 
@@ -39,16 +37,13 @@ Color getCategoryColor(AppState state, String id) =>
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
 
 DateTime getStatisticsMonthStart(AppState state) =>
-    firstDay(state.selectedMonth.element);
+    firstDay(state.selectedMonth!.element);
 
-DateTime getStatisticsMonthEnd(AppState state) =>
-    lastDay(state.selectedMonth.element);
+DateTime getStatisticsMonthEnd(AppState state) => lastDay(state.selectedMonth!.element);
 
-DoubleLinkedQueue<DateTime> getViewableMonths(AppState state) =>
-    state.viewableMonths;
+DoubleLinkedQueue<DateTime> getViewableMonths(AppState state) => state.viewableMonths;
 
-DoubleLinkedQueueEntry<DateTime> getSelectedMonth(AppState state) =>
-    state.selectedMonth;
+DoubleLinkedQueueEntry<DateTime> getSelectedMonth(AppState state) => state.selectedMonth!;
 
 DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
   AppState state,
@@ -64,13 +59,12 @@ bool isRegistrationInProgress(AppState state) => state.registrationInProgress;
 
 bool isSignInInProgress(AppState state) => state.signInInProgress;
 
-String getAuthenticationErrorMessage(AppState state) =>
-    state.authenticationErrorMessage;
+String getAuthenticationErrorMessage(AppState state) => state.authenticationErrorMessage;
 
 bool isRegistrationSuccessful(AppState state) => state.registrationSuccess;
 
 String getUserId(AppState state) => state.userId;
 
-String getUserEmail(AppState state) => state.userEmail;
+String? getUserEmail(AppState state) => state.userEmail;
 
 FirestoreDatabase getRepository(AppState state) => state.database;

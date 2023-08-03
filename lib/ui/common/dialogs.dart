@@ -14,12 +14,12 @@ class ConfirmationDialog extends StatelessWidget {
   final Function onCancel;
 
   ConfirmationDialog({
-    @required this.title,
-    @required this.confirmationText,
-    @required this.proceedText,
-    @required this.cancelText,
-    @required this.onProceed,
-    @required this.onCancel,
+    required this.title,
+    required this.confirmationText,
+    required this.proceedText,
+    required this.cancelText,
+    required this.onProceed,
+    required this.onCancel,
     proceedColor,
     cancelColor,
   })  : this.proceedColor = proceedColor ?? Palette.discouraged,
@@ -31,30 +31,34 @@ class ConfirmationDialog extends StatelessWidget {
       title: Center(
         child: Text(
           title,
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context).textTheme.headline6,
         ),
       ),
       content: Text(
         confirmationText,
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
-          child: FlatButton(
+          child: TextButton(
             child: Text(cancelText),
-            textColor: Colors.white,
-            color: cancelColor,
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              backgroundColor: cancelColor,
+            ),
             onPressed: () => onCancel(),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
-          child: FlatButton(
+          child: TextButton(
             child: Text(proceedText),
-            textColor: Colors.white,
-            color: proceedColor,
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              backgroundColor: proceedColor,
+            ),
             onPressed: () => onProceed(),
           ),
         ),

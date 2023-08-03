@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sink/ui/common/dot.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 import 'package:sink/ui/statistics/month_summary.dart';
-
 import 'circular_chart.dart';
 import 'horizontal_bar_chart.dart';
 
@@ -20,15 +19,15 @@ class SortedBreakdown extends StatelessWidget {
   );
 
   factory SortedBreakdown({
-    @required String month,
-    @required List<ChartEntry> data,
-    bool ascending,
+    required String month,
+    required List<ChartEntry> data,
+    bool? ascending,
   }) {
     data.sort();
     var asc = ascending ?? false;
     var sorted = asc ? data.toList() : data.reversed.toList();
     var max = asc ? sorted.last.amount : sorted.first.amount;
-    var total = sorted.fold(0.0, (prev, next) => prev + next.amount);
+    var total = sorted.fold(0.0, (prev, next) => prev! + next.amount);
 
     return SortedBreakdown._(
       month,
@@ -61,7 +60,7 @@ class CircularBreakdown extends StatelessWidget {
   final List<ChartEntry> data;
   final double totalAmount;
 
-  CircularBreakdown({@required this.data, @required this.totalAmount});
+  CircularBreakdown({required this.data, required this.totalAmount});
 
   @override
   Widget build(BuildContext context) {

@@ -81,7 +81,7 @@ class SignIn {
   final String email;
   final String password;
 
-  SignIn({@required this.email, @required this.password});
+  SignIn({required this.email, required this.password});
 }
 
 @immutable
@@ -95,7 +95,7 @@ class Register {
   final String email;
   final String password;
 
-  Register({@required this.email, @required this.password});
+  Register({required this.email, required this.password});
 }
 
 @immutable
@@ -122,7 +122,7 @@ class SetUserDetails {
   final String id;
   final String email;
 
-  SetUserDetails({@required this.id, @required this.email});
+  SetUserDetails({required this.id, required this.email});
 }
 
 @immutable

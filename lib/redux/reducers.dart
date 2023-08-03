@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
@@ -29,15 +30,15 @@ AppState reduce(AppState state, dynamic action) {
       var months = dateRange(action.from, action.to);
       var linkedMonths = DoubleLinkedQueue<DateTime>.from(months);
       var curr = state.selectedMonth;
-      if (curr == null) {
-        curr = linkedMonths.firstEntry();
+      if (curr.isNull) {
+        curr = linkedMonths.firstEntry()!;
       } else {
         var last = linkedMonths.firstEntry();
-        while (last.nextEntry() != null && last.element != curr.element) {
+        while (last!.nextEntry() != null && last.element != curr!.element) {
           last = last.nextEntry();
         }
-        if (last == null) {
-          curr = linkedMonths.lastEntry();
+        if (last.isNull) {
+          curr = linkedMonths.lastEntry()!;
         } else {
           curr = last;
         }

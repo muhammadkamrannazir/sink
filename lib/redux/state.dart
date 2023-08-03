@@ -12,7 +12,7 @@ import 'package:sink/theme/palette.dart';
 @immutable
 class AppState {
   final String userId;
-  final String userEmail;
+  final String? userEmail;
   final AuthenticationStatus authStatus;
   final bool registrationInProgress;
   final bool registrationSuccess;
@@ -23,60 +23,46 @@ class AppState {
   // TODO: must be at least one default category
   final bool areCategoriesLoading;
   final Set<Color> availableColors;
-  final DoubleLinkedQueueEntry<DateTime> selectedMonth;
+  final DoubleLinkedQueueEntry<DateTime>? selectedMonth;
   final DoubleLinkedQueue<DateTime> viewableMonths;
   final FirestoreDatabase database;
 
   AppState({
-    userId,
-    userEmail,
-    authStatus,
-    registrationInProgress,
-    registrationSuccess,
-    signInInProgress,
-    authenticationErrorMessage,
-    removed,
-    categories,
-    areCategoriesLoading,
-    availableColors,
-    selectedMonth,
-    viewableMonths,
-    database,
-  })  : this.userId = userId,
-        this.userEmail = userEmail,
-        this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
-        this.registrationInProgress = registrationInProgress ?? false,
-        this.registrationSuccess = registrationSuccess ?? false,
-        this.signInInProgress = signInInProgress ?? false,
-        this.authenticationErrorMessage = authenticationErrorMessage ?? "",
-        this.removed = removed ?? List(),
-        this.categories = categories ?? Set(),
-        this.areCategoriesLoading = areCategoriesLoading ?? true,
-        this.availableColors = availableColors ?? Set.from(materialColors),
-        this.selectedMonth = selectedMonth,
-        this.viewableMonths = viewableMonths ??
-            DoubleLinkedQueue.from([firstDay(DateTime.now())]),
-        this.database = database;
+    required this.userId,
+    this.userEmail,
+    required this.authStatus,
+    required this.registrationInProgress,
+    required this.registrationSuccess,
+    required this.signInInProgress,
+    required this.authenticationErrorMessage,
+    required this.removed,
+    required this.categories,
+    required this.areCategoriesLoading,
+    required this.availableColors,
+    this.selectedMonth,
+    required this.viewableMonths,
+    required this.database,
+  });
 
   AppState copyWith({
-    String userId,
-    String userEmail,
-    AuthenticationStatus authStatus,
-    bool registrationInProgress,
-    bool registrationSuccess,
-    bool signInInProgress,
-    String authenticationErrorMessage,
-    List<Entry> removed,
-    Set<Category> categories,
-    bool areCategoriesLoading,
-    Set<Color> availableColors,
-    DoubleLinkedQueueEntry<DateTime> selectedMonth,
-    DoubleLinkedQueue<DateTime> viewableMonths,
-    FirestoreDatabase database,
+    String? userId,
+    String? userEmail,
+    AuthenticationStatus? authStatus,
+    bool? registrationInProgress,
+    bool? registrationSuccess,
+    bool? signInInProgress,
+    String? authenticationErrorMessage,
+    List<Entry>? removed,
+    Set<Category>? categories,
+    bool? areCategoriesLoading,
+    Set<Color>? availableColors,
+    DoubleLinkedQueueEntry<DateTime>? selectedMonth,
+    DoubleLinkedQueue<DateTime>? viewableMonths,
+    FirestoreDatabase? database,
   }) {
     return AppState(
-      userId: chooseOldOrNull(this.userId, userId),
-      userEmail: chooseOldOrNull(this.userEmail, userEmail),
+      userId: userId ?? this.userId,
+      userEmail: userEmail ?? this.userEmail,
       authStatus: authStatus ?? this.authStatus,
       registrationInProgress:
           registrationInProgress ?? this.registrationInProgress,
@@ -95,7 +81,7 @@ class AppState {
   }
 }
 
-String chooseOldOrNull(String old, String fresh) {
+String? chooseOldOrNull(String? old, String? fresh) {
   if (fresh == null) {
     return old;
   } else if (fresh == "") {

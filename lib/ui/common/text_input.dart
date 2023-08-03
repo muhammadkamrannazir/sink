@@ -5,35 +5,31 @@ import 'package:sink/ui/common/text.dart';
 
 class UndecoratedTextInput extends StatefulWidget {
   final Function(String) onChange;
-  final String value;
+  final String? value;
   final String hintText;
-  final TextStyle style;
+  final TextStyle? style;
 
   UndecoratedTextInput({
-    @required this.onChange,
-    @required this.hintText,
+    required this.onChange,
+    required this.hintText,
     this.value,
     this.style,
   });
 
   @override
-  State<StatefulWidget> createState() => _UndecoratedTextInputState(value);
+  State<StatefulWidget> createState() => _UndecoratedTextInputState();
 }
 
 class _UndecoratedTextInputState extends State<UndecoratedTextInput> {
-  final _focus = new FocusNode();
-  final _controller;
+  final _focus = FocusNode();
+  late TextEditingController _controller;
 
   bool clearable = false;
   bool focused = false;
 
-  _UndecoratedTextInputState(value)
-      : _controller = isBlank(value)
-            ? TextEditingController()
-            : TextEditingController.fromValue(TextEditingValue(text: value));
-
   @override
   void initState() {
+    _controller = TextEditingController(text: widget.value ?? '');
     _controller.addListener(() => widget.onChange(_controller.text));
     _focus.addListener(() => focused = !focused);
     super.initState();
@@ -42,6 +38,7 @@ class _UndecoratedTextInputState extends State<UndecoratedTextInput> {
   @override
   void dispose() {
     _controller.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -61,18 +58,18 @@ class _UndecoratedTextInputState extends State<UndecoratedTextInput> {
 
 class ClearableTextInput extends StatefulWidget {
   final Function(String) onChange;
-  final String value;
+  final String? value;
   final String hintText;
-  final TextStyle style;
-  final TextInputType keyboardType;
-  final int maxLines;
-  final EdgeInsetsGeometry contentPadding;
-  final InputBorder border;
-  final bool obscureText;
+  final TextStyle? style;
+  final TextInputType? keyboardType;
+  final int? maxLines;
+  final EdgeInsetsGeometry? contentPadding;
+  final InputBorder? border;
+  final bool? obscureText;
 
   ClearableTextInput({
-    @required this.onChange,
-    @required this.hintText,
+    required this.onChange,
+    required this.hintText,
     this.value,
     this.style,
     this.keyboardType,
@@ -83,23 +80,19 @@ class ClearableTextInput extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _TextInputState(value);
+  State<StatefulWidget> createState() => _TextInputState();
 }
 
 class _TextInputState extends State<ClearableTextInput> {
-  final _focus = new FocusNode();
-  final _controller;
+  final _focus = FocusNode();
+  late TextEditingController _controller;
 
   bool clearable = false;
   bool focused = false;
 
-  _TextInputState(value)
-      : _controller = isBlank(value)
-            ? TextEditingController()
-            : TextEditingController.fromValue(TextEditingValue(text: value));
-
   @override
   void initState() {
+    _controller = TextEditingController(text: widget.value ?? '');
     _controller.addListener(() => isClearable());
     _controller.addListener(() => widget.onChange(_controller.text));
     _focus.addListener(() => focused = !focused);
@@ -109,6 +102,7 @@ class _TextInputState extends State<ClearableTextInput> {
   @override
   void dispose() {
     _controller.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -164,7 +158,7 @@ class EmailFormField extends StatefulWidget {
   final Function(String) onSaved;
   final bool showHelpText;
 
-  EmailFormField({Key key, @required this.onSaved, showHelpText})
+  EmailFormField({Key? key, required this.onSaved, bool? showHelpText})
       : this.showHelpText = showHelpText ?? true,
         super(key: key);
 
@@ -195,7 +189,7 @@ class _EmailFormFieldState extends State<EmailFormField> {
             Text(
               "The address should be of a form email@provider.domain. "
               "For example: email@example.com",
-              style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 14),
             ),
           TextFormField(
             controller: _controller,
@@ -206,7 +200,7 @@ class _EmailFormFieldState extends State<EmailFormField> {
             onChanged: (String value) => setState(() {
               this.touched = isNotEmpty(value);
             }),
-            onSaved: (value) => widget.onSaved(value),
+            onSaved: (value) => widget.onSaved(value ?? ''),
             decoration: touched
                 ? InputDecoration(
                     suffixIcon: InkWell(
@@ -222,15 +216,14 @@ class _EmailFormFieldState extends State<EmailFormField> {
   }
 
   void _clearInput() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.clear());
+    WidgetsBinding.instance?.addPostFrameCallback((_) => _controller.clear());
     setState(() {
       touched = false;
     });
   }
 
-  String _validateEmail(String email) {
-    email = email.trim();
-    if (email.length == 0) {
+  String? _validateEmail(String? email) {
+    if (email == null || email.trim().isEmpty) {
       return "Email field cannot be empty";
     } else if (!widget.regEx.hasMatch(email)) {
       return "Invalid email: use 'email@provider.domain' form";
@@ -244,7 +237,7 @@ class SignInPasswordFormField extends StatefulWidget {
   final Function(String) onSaved;
   final bool showHelpText;
 
-  SignInPasswordFormField({Key key, @required this.onSaved, showHelpText})
+  SignInPasswordFormField({Key? key, required this.onSaved, bool? showHelpText})
       : this.showHelpText = showHelpText ?? true,
         super(key: key);
 
@@ -281,7 +274,7 @@ class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
 class RegistrationPasswordFormField extends StatefulWidget {
   final Function(String) onSaved;
 
-  RegistrationPasswordFormField({Key key, @required this.onSaved, showHelpText})
+  RegistrationPasswordFormField({Key? key, required this.onSaved, bool? showHelpText})
       : super(key: key);
 
   @override
@@ -308,7 +301,7 @@ class _RegistrationPasswordFormFieldState
           Text(
             "Make sure to use a strong password: use lowercase and capital "
             "letters, special symbols, numbers.",
-            style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 14),
           ),
           RevealableTextFormField(
             controller: _passwordController,
@@ -321,7 +314,7 @@ class _RegistrationPasswordFormFieldState
           ),
           Text(
             "Make sure that the password matches the one above.",
-            style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 14),
           ),
           RevealableTextFormField(
             controller: _repetitionController,
@@ -333,7 +326,7 @@ class _RegistrationPasswordFormFieldState
     );
   }
 
-  String _ensureSamePassword(String password) {
+  String? _ensureSamePassword(String? password) {
     if (_passwordController.text != _repetitionController.text) {
       return "Passwords must match";
     }
@@ -347,10 +340,10 @@ class RevealableTextFormField extends StatefulWidget {
   final Function(String) onSaved;
 
   RevealableTextFormField({
-    Key key,
-    @required this.controller,
-    @required this.onValidate,
-    @required this.onSaved,
+    Key? key,
+    required this.controller,
+    required this.onValidate,
+    required this.onSaved,
   }) : super(key: key);
 
   @override
@@ -369,8 +362,8 @@ class RevealableTextFormFieldState extends State<RevealableTextFormField> {
       maxLines: 1,
       obscureText: hideText,
       autofocus: false,
-      validator: (value) => widget.onValidate(value),
-      onSaved: (value) => widget.onSaved(value),
+      validator: (value) => widget.onValidate(value!),
+      onSaved: (value) => widget.onSaved(value ?? ''),
       onChanged: (String value) => setState(() {
         this.touched = isNotEmpty(value);
       }),

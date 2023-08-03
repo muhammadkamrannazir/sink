@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ClickableArrow extends StatelessWidget {
-  final Function onTap;
+  final void Function()? onTap;
   final bool right;
   final bool enableFeedback;
-  final int size;
+  final int? size;
 
   ClickableArrow({
-    @required this.onTap,
-    @required this.right,
-    this.enableFeedback,
+    required this.onTap,
+    required this.right,
+    this.enableFeedback= false,
     this.size,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      enableFeedback: enableFeedback != null,
+      enableFeedback: enableFeedback ,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Icon(

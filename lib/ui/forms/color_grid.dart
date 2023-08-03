@@ -8,7 +8,7 @@ class ColorGrid extends StatelessWidget {
   final Color selectedColor;
   final Function(Color) onTap;
 
-  ColorGrid({@required this.selectedColor, @required this.onTap});
+  ColorGrid({required this.selectedColor, required this.onTap});
 
   void _handleTap(Color newColor) {
     onTap(newColor);
@@ -48,7 +48,7 @@ class ColorGrid extends StatelessWidget {
 class _ViewModel {
   final Set<Color> colors;
 
-  _ViewModel({@required this.colors});
+  _ViewModel({required this.colors});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(

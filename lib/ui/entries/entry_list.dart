@@ -50,7 +50,7 @@ class EntryList extends StatelessWidget {
 class _ViewModel {
   final FirestoreDatabase database;
 
-  _ViewModel({@required this.database});
+  _ViewModel({required this.database});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(database: getRepository(store.state));

@@ -32,7 +32,7 @@ class EntriesPage extends StatelessWidget {
 class _ViewModel {
   final bool loading;
 
-  _ViewModel({@required this.loading});
+  _ViewModel({required this.loading});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(

@@ -18,7 +18,7 @@ import 'icon_grid.dart';
 class CategoryDialog extends StatefulWidget {
   final CategoryType type;
 
-  CategoryDialog({@required this.type});
+  CategoryDialog({required this.type});
 
   @override
   State<StatefulWidget> createState() => CategoryDialogState();
@@ -26,10 +26,10 @@ class CategoryDialog extends StatefulWidget {
 
 class CategoryDialogState extends State<CategoryDialog>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  String _categoryName;
-  String _iconName;
-  Color _color;
+  late TabController _tabController;
+  late String _categoryName;
+  late String _iconName;
+  late Color _color;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class CategoryDialogState extends State<CategoryDialog>
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                         child: CategoryIcon(
-                          iconData: icons[_iconName],
+                          iconData: icons[_iconName]!,
                           color: _color ?? Colors.white,
                           isActive: true,
                         ),
@@ -92,7 +92,7 @@ class CategoryDialogState extends State<CategoryDialog>
                 Container(
                   child: new TabBar(
                     indicatorColor: Colors.red,
-                    labelColor: Theme.of(context).textTheme.title.color,
+                    labelColor: Theme.of(context).textTheme.titleLarge!.color,
                     controller: _tabController,
                     tabs: [
                       new Tab(text: 'Icon'),
@@ -106,7 +106,7 @@ class CategoryDialogState extends State<CategoryDialog>
                     children: <Widget>[
                       IconGrid(
                         selectedCategory: _iconName,
-                        selectedColor: _color ?? Palette.lightGrey,
+                        selectedColor: _color,
                         onTap: (String newCategory) => setState(() {
                           _iconName = newCategory;
                         }),
@@ -126,21 +126,21 @@ class CategoryDialogState extends State<CategoryDialog>
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
-              child: FlatButton(
+              child: ElevatedButton(
                 child: Text("Cancel"),
-                textColor: Colors.white,
-                color: Palette.discouraged,
+                // textColor: Colors.white,
+                // color: Palette.discouraged,
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
-              child: FlatButton(
+              child: ElevatedButton(
                 child: Text("Add"),
-                textColor: Colors.white,
-                color: Colors.blue,
+                // textColor: Colors.white,
+                // color: Colors.blue,
                 onPressed: hasData() ? () => handleSave(vm.onSave) : null,
-                disabledColor: Colors.grey,
+                // disabledColor: Colors.grey,
               ),
             ),
           ],
@@ -155,8 +155,8 @@ class _DialogViewModel {
   final Set<Color> availableColors;
 
   _DialogViewModel({
-    @required this.onSave,
-    @required this.availableColors,
+    required this.onSave,
+    required this.availableColors,
   });
 
   static _DialogViewModel fromState(

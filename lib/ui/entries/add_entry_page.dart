@@ -26,7 +26,7 @@ class AddExpensePage extends StatelessWidget {
 class _AddViewModel {
   final Function(Entry) onSave;
 
-  _AddViewModel({@required this.onSave});
+  _AddViewModel({required this.onSave});
 
   static _AddViewModel fromState(Store<AppState> store) {
     return _AddViewModel(

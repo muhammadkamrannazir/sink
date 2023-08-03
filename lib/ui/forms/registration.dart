@@ -19,8 +19,8 @@ class RegistrationForm extends StatefulWidget {
 class RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email;
-  String _password;
+  String? _email;
+  String? _password;
 
   void _onEmailSaved(String value) {
     _email = value.trim();
@@ -46,7 +46,7 @@ class RegistrationFormState extends State<RegistrationForm> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child:
-                  Text('Register', style: Theme.of(context).textTheme.headline),
+                  Text('Register', style: Theme.of(context).textTheme.headlineMedium),
             ),
           ),
           EmailFormField(
@@ -83,9 +83,9 @@ class RegistrationFormState extends State<RegistrationForm> {
   }
 
   void _save(_RegistrationFormViewModel vm) {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      vm.registerUser(_email, _password);
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      vm.registerUser(_email!, _password!);
     }
   }
 }
@@ -97,10 +97,10 @@ class _RegistrationFormViewModel {
   final String errorMessage;
 
   _RegistrationFormViewModel({
-    @required this.registerUser,
-    @required this.registrationInProgress,
-    @required this.registrationSuccessful,
-    @required this.errorMessage,
+    required this.registerUser,
+    required this.registrationInProgress,
+    required this.registrationSuccessful,
+    required this.errorMessage,
   });
 
   static _RegistrationFormViewModel fromState(Store<AppState> store) {
@@ -128,7 +128,7 @@ class RegistrationSuccessScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: Text(
                   'Registration successful!',
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
             ),
@@ -159,11 +159,11 @@ class RegistrationSuccessScreen extends StatelessWidget {
 class RegistrationToSignInText extends StatelessWidget {
   final String plainText;
   final String hyperlinkedText;
-  final bool center;
+  final bool? center;
 
   RegistrationToSignInText({
-    @required this.plainText,
-    @required this.hyperlinkedText,
+    required this.plainText,
+    required this.hyperlinkedText,
     this.center,
   });
 
@@ -181,7 +181,7 @@ class RegistrationToSignInText extends StatelessWidget {
             InkWell(
               child: Text(
                 hyperlinkedText,
-                style: Theme.of(context).textTheme.body1.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: Colors.blue,
                     ),
               ),
@@ -200,7 +200,7 @@ class RegistrationToSignInText extends StatelessWidget {
 class _RegistrationBackButtonViewModel {
   final Function clearRegistrationState;
 
-  _RegistrationBackButtonViewModel({@required this.clearRegistrationState});
+  _RegistrationBackButtonViewModel({required this.clearRegistrationState});
 
   static _RegistrationBackButtonViewModel fromState(Store<AppState> store) {
     return _RegistrationBackButtonViewModel(

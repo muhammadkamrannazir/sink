@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ColoredDot extends StatelessWidget {
   final double radius;
   final Color color;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   ColoredDot({
-    @required this.radius,
-    @required this.color,
+    required this.radius,
+    required this.color,
     this.padding,
   });
 

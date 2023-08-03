@@ -9,21 +9,21 @@ class Entry {
   final double amount;
   final DateTime date;
   final String categoryId;
-  final String description;
+  final String? description;
   final EntryType type;
 
   Entry({
-    @required this.amount,
-    @required this.date,
-    @required this.categoryId,
-    @required this.type,
+    required this.amount,
+    required this.date,
+    required this.categoryId,
+    required this.type,
     this.description,
-    id,
+    String? id,
   }) : this.id = id ?? Uuid().v4();
 
-  static empty() {
+  static Entry empty() {
     return Entry(
-      amount: null,
+      amount: 0.0,
       date: DateTime.now(),
       categoryId: '',
       type: EntryType.EXPENSE,
@@ -31,16 +31,14 @@ class Entry {
     );
   }
 
-  static Entry fromSnapshot(DocumentSnapshot document) {
+  static Entry fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     return Entry(
       id: document['id'],
       amount: document['amount'],
       date: document['date'].toDate(),
       categoryId: document['categoryId'],
       description: document['description'],
-      type: document['type'] != null
-          ? EntryType.values[document['type']]
-          : EntryType.values[0],
+      type: EntryType.values[document['type']] ?? EntryType.EXPENSE,
     );
   }
 

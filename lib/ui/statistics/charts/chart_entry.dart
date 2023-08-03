@@ -9,8 +9,8 @@ class ChartEntry implements Comparable<ChartEntry> {
   final double totalAmount;
 
   ChartEntry({
-    @required this.label,
-    @required this.amount,
+    required this.label,
+    required this.amount,
     color,
     maxAmount,
     totalAmount,
@@ -52,9 +52,9 @@ class DatedChartEntry extends ChartEntry {
   DateTime date;
 
   DatedChartEntry({
-    @required this.date,
-    @required label,
-    @required amount,
+    required this.date,
+    required label,
+    required amount,
     color,
     maxAmount,
     totalAmount,

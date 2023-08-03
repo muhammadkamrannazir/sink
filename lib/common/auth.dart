@@ -9,7 +9,7 @@ enum AuthenticationStatus {
 abstract class Authentication {
   Future<String> signUp(String email, String password);
 
-  Future<FirebaseUser> signIn(String email, String password);
+  Future<User> signIn(String email, String password);
 
   Future<void> signOut();
 
@@ -17,13 +17,13 @@ abstract class Authentication {
 
   Future<bool> isEmailVerified();
 
-  Future<FirebaseUser> getCurrentUser();
+  Future<User> getCurrentUser();
 }
 
 class FirebaseEmailAuthentication implements Authentication {
   FirebaseAuth _auth;
 
-  FirebaseEmailAuthentication({firebaseAuth})
+  FirebaseEmailAuthentication({FirebaseAuth? firebaseAuth})
       : _auth = firebaseAuth ?? FirebaseAuth.instance;
 
   Future<String> signUp(String email, String password) async {
@@ -33,15 +33,15 @@ class FirebaseEmailAuthentication implements Authentication {
     );
     var user = result.user;
 
-    return user.uid;
+    return user!.uid;
   }
 
-  Future<FirebaseUser> signIn(String email, String password) async {
+  Future<User> signIn(String email, String password) async {
     var result = await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    return result.user;
+    return result.user!;
   }
 
   Future<void> signOut() async {
@@ -49,17 +49,17 @@ class FirebaseEmailAuthentication implements Authentication {
   }
 
   Future<void> sendEmailVerification() async {
-    var user = await _auth.currentUser();
-    user.sendEmailVerification();
+    var user = _auth.currentUser;
+    user!.sendEmailVerification();
   }
 
   Future<bool> isEmailVerified() async {
-    var user = await _auth.currentUser();
-    return user.isEmailVerified;
+    var user = _auth.currentUser;
+    return user!.emailVerified;
   }
 
-  Future<FirebaseUser> getCurrentUser() async {
-    var user = await _auth.currentUser();
-    return user;
+  Future<User> getCurrentUser() async {
+    var user = _auth.currentUser;
+    return user!;
   }
 }

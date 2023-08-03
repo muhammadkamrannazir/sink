@@ -9,7 +9,6 @@ const ICON_BACKGROUND_SIZE = 36.0;
 final LinkedHashMap<String, IconData> icons = {
   // Generic
   "add": Icons.add,
-
   // Vehicles
   "bicycle": FontAwesomeIcons.bicycle,
   "car": Icons.directions_car,

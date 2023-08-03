@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class EmptyBreakdown extends StatelessWidget {
   final String periodName;
 
-  EmptyBreakdown({@required this.periodName});
+  EmptyBreakdown({required this.periodName});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class EmptyBreakdown extends StatelessWidget {
 class ChartTitle extends StatelessWidget {
   final String title;
 
-  ChartTitle({@required this.title});
+  ChartTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class ChartTitle extends StatelessWidget {
 class ChartSubtitle extends StatelessWidget {
   final String subtitle;
 
-  ChartSubtitle({@required this.subtitle});
+  ChartSubtitle({required this.subtitle});
 
   @override
   Widget build(BuildContext context) {

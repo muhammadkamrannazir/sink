@@ -3,23 +3,22 @@ import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 
 class FirestoreDatabase {
-  static Firestore _db = Firestore.instance;
+  static FirebaseFirestore _db = FirebaseFirestore.instance;
 
   final String userId;
-  final CollectionReference entries;
-  final CollectionReference categories;
+  CollectionReference entries;
+  CollectionReference categories;
 
   FirestoreDatabase._()
       // For testing only
       : this.userId = '',
-        this.entries = null,
-        this.categories = null;
+        this.entries = _db.collection("empty_collection"),
+        this.categories = _db.collection("empty_collection");
 
   FirestoreDatabase(this.userId)
-      : this.entries =
-            _db.collection("users").document(userId).collection("entry"),
+      : this.entries = _db.collection("users").doc(userId).collection("entry"),
         this.categories =
-            _db.collection("users").document(userId).collection("category");
+            _db.collection("users").doc(userId).collection("category");
 
   Stream<QuerySnapshot> getEntriesSnapshot() {
     return entries.orderBy('date', descending: true).snapshots();
@@ -36,19 +35,19 @@ class FirestoreDatabase {
   }
 
   void create(Entry entry) {
-    entries.reference().document(entry.id).setData(entry.toMap());
+    entries.doc(entry.id).set(entry.toMap());
   }
 
   void delete(Entry entry) {
-    entries.reference().document(entry.id).delete();
+    entries.doc(entry.id).delete();
   }
 
-  Future<QuerySnapshot> getCategories() async {
-    return categories.orderBy('name', descending: false).getDocuments();
+  Future<Future<QuerySnapshot<Object?>>> getCategories() async {
+    return categories.orderBy('name', descending: false).get();
   }
 
   void createCategory(Category category) {
-    categories.reference().document(category.id).setData({
+    categories.doc(category.id).set({
       'id': category.id,
       'name': category.name,
       'icon': category.icon,
@@ -61,5 +60,7 @@ class FirestoreDatabase {
 class TestFirestoreDatabase extends FirestoreDatabase {
   String userId;
 
-  TestFirestoreDatabase() : super._();
+  TestFirestoreDatabase(
+    this.userId,
+  ) : super._();
 }

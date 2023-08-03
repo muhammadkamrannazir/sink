@@ -15,7 +15,7 @@ class BalanceCard extends StatelessWidget {
   final DateTime from;
   final DateTime to;
 
-  BalanceCard({@required this.from, @required this.to});
+  BalanceCard({required this.from, required this.to});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class BalanceCard extends StatelessWidget {
 class _ViewModel {
   final FirestoreDatabase database;
 
-  _ViewModel({@required this.database});
+  _ViewModel({required this.database});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(database: getRepository(store.state));

@@ -10,13 +10,13 @@ class VisualizedAmount extends StatelessWidget {
 
   final double amount;
   final bool income;
-  final TextStyle style;
+  final TextStyle? style;
 
-  VisualizedAmount({@required this.amount, @required this.income, this.style});
+  VisualizedAmount({required this.amount, required this.income, this.style});
 
   @override
   Widget build(BuildContext context) {
-    var actualStyle = style ?? Theme.of(context).textTheme.body1;
+    var actualStyle = style ?? Theme.of(context).textTheme.bodyText2;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -24,7 +24,7 @@ class VisualizedAmount extends StatelessWidget {
         Icon(
           income ? incomeIcon : expenseIcon,
           color: income ? Palette.income : Palette.expense,
-          size: actualStyle.fontSize * iconScalingFactor,
+          size: actualStyle!.fontSize! * iconScalingFactor,
         ),
       ],
     );
